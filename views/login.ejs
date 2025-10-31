@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+</head>
+<body class="wrapper">
+    <main>
+        <div>
+            todos
+        </div>
+
+        <div>
+            <form action="/users/login" method="post">
+                <section>
+                    Sign in
+                </section>
+                <section>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" autocomplete="username" required autofocus> 
+                </section>
+                <section>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" autocomplete="password" required autofocus>
+                </section>
+                <button type="submit">
+                    Sign in
+                </button>
+            </form>
+        </div>
+
+        <div>
+            Don't have an account? <span><a href="signup">Sign up</a></span>
+        </div>
+    </main>
+</body>
+</html>

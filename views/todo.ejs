@@ -1,0 +1,95 @@
+
+<% const roles = ["all", "false", "true"] %>
+<% const state = ["All", "Active", "Completed"] %>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/todo.css" />
+    <script src="/javascripts/todo.js" defer></script>
+  </head>
+  <body class="wrapper">
+    <header>
+      <section>
+        <img src="/images/profile.svg" alt="" width="15px" />
+        <div>
+            <%= user.username %>
+        </div>
+      </section>
+      <section>
+        <img src="/images/logout.svg" alt="" width="15px" />
+        <form action="/users/logout" method="post">
+            <button type="submit" class="button-logout">Logout</button>
+        </form>
+      </section>
+    </header>
+
+    <div class="title"> todos</div>
+
+    <main>
+      <form class="taskInput" method="post" >
+        <input
+          type="text"
+          name="task"
+          id="taskInput"
+          placeholder="What's need to be done?"
+        />
+      </form>
+
+    <% tasks.map(task => { %>
+      <div class="task" >
+        <div class="taskCheckbox">
+          <form method="post" action=<%= `${user.user_id}/put/${task.task_id}` %> >
+            <input type="checkbox" name="completed" id="completeTrue" value='true' 
+            <%= task.completed ? 'checked' : '' %>
+            />
+            <input
+              type="checkbox"
+              name="completed"
+              id="completeFalse"
+              value='false'
+              hidden
+            />
+            <input type="submit" class="checkboxSubmit" hidden />
+          </form>
+          <div class="<%= task.completed ? 'active completed' : 'active' %>">
+            <%= task.task_name %>
+          </div>
+        </div>
+
+        <div class="taskDel hidden">
+          <form method="post" action=<%= `${user.user_id}/del/${task.task_id}` %> >
+            <button type="submit" class="button-X">
+                X
+            </button>
+          </form>
+        </div>
+      </div>
+      <% }) %>
+
+      <div class="sort">
+        <div><%= (tasks.filter(task => task.completed === false )).length %> items left </div>
+          <ul role="list">
+            <% roles.map((role, index) => { %>
+              <% if (filter === role ) { %>
+                <li class="li" role=<%=role %> > 
+                  <%= state[index] %>
+                </li>
+              <% } else { %> 
+                <li role=<%=role %>>
+                  <%= state[index]  %>
+                </li>
+            <% }}) %>
+          </ul>
+
+        <form hidden >
+          <input type="text" name="filter" class="filter"  hidden> 
+          <input type="submit" class="filterForm">
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
